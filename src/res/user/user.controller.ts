@@ -16,6 +16,7 @@ export class UserController{
     async getUserInfo(){
         return this.userService.getUserInfo();
     }
+    
 }
 
 //user에게 원하는 서비스 제공
