@@ -1,5 +1,6 @@
-import {CreateDateColumn, UpdateDateColumn, DeleteDateColumn,Column,Entity,PrimaryGeneratedColumn} from "typeorm";
-
+import {CreateDateColumn, OneToMany,UpdateDateColumn, DeleteDateColumn,Column,Entity,PrimaryGeneratedColumn} from "typeorm";
+import { ArticleEntity } from "./article.entity";
+import { CommentEntity } from "./comment.entity";
 @Entity('User')
 export class UserEntity{
     @PrimaryGeneratedColumn({type:'bigint'})
@@ -22,6 +23,11 @@ export class UserEntity{
     @DeleteDateColumn({type:'timestamp',nullable:true})
     deleted_at:Date|null;
     
-
-
+    @OneToMany(()=>ArticleEntity,(article)=> article.user)
+    //화살표 함수 : 우선은 넘김 
+    //바인딩이 변동 : 함수의 소속이 바뀜 
+    articles:ArticleEntity[]; //복수였는지 확인하기 위해 s를 써서 변수 지음
+    //배열형태로 받음  
+    @OneToMany(()=>CommentEntity,(comment)=>comment.user)
+    comments:CommentEntity[];
 }
