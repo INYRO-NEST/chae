@@ -15,25 +15,23 @@ export class ArticleEntity{
     content : string; 
 
     @CreateDateColumn({type:'timestamp'}) //@CreateDateColumn()으로 생략가능 명확성을 위한 
-    created_at:Date;
+    createdAt:Date;
     
     @UpdateDateColumn({type:'timestamp'})
-    updated_at:Date|null;
+    updatedAt:Date|null;
 
     @DeleteDateColumn({type:'timestamp'})
-    deleted_at:Date|null;
+    deletedAt:Date|null;
 
-   
-    @Column('bigint',{unique:false,nullable:false}) 
     //user이 계속 들어가므로 unique가 false임 주의 
-    user_id:string;
+    @Column('bigint',{unique:false,nullable:false}) 
+    userId:string;
 
     @ManyToOne(()=>UserEntity,(user)=>user.articles)
     @JoinColumn({name:'userId',referencedColumnName:'id'})
     user:UserEntity;
 
     @OneToMany(()=>CommentEntity,(comment)=>comment.article)
-    
     comments:CommentEntity[];
 
 

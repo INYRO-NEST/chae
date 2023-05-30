@@ -8,6 +8,7 @@ export class CommentEntity{
 
     @Column('text',{unique:false,nullable:false})
     content:string
+    
     @Column('bigint',{unique:false,nullable:true}) //첫 댓글은 부모가 없음 
     parentId:string;
 

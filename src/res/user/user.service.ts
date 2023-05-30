@@ -1,12 +1,39 @@
 import {Injectable} from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm/dist';
+import { UserEntity } from 'src/entities/user.entity';
+import { Repository } from 'typeorm/repository/Repository';
+import {hash} from 'bcrypt';
 @Injectable()
+
 export class UserService{
-    async getMainPage(){
-        return 'User Main Page'
+    constructor(
+        @InjectRepository(UserEntity)
+        private readonly userRepository:Repository<UserEntity>,
+    ){}
+    async getUserPage(){
+        return {
+            user:{
+                age:12,
+                name:'hans',
+                height:100,
+                paper:true,
+
+            },
+        };
     }
     async getUserInfo(){
         const users={name:"hansu",age:20} //return this.userService.user;
         return users;
+    }
+
+    
+    async register(email:string, password : string ){
+        const user=await this.userRepository.save({
+            email:email,
+            password : await hash(password, 10) , 
+
+        });
+        return user;
     }
     
 
